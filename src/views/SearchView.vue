@@ -2,7 +2,7 @@
   <section :class="$style.section">
     <h2>Search result: {{ searchValue }}</h2>
     <div :class="$style.info">
-      <p>Number of repositories found: {{ searchRepo.repositoryCount }}</p>
+      <p>Number of repositories found: {{ searchRepo && searchRepo.repositoryCount ? searchRepo.repositoryCount : 0 }}</p>
     </div>
     <template v-if='searchRepo && listRepo'>
       <div :class="$style.content">
@@ -16,13 +16,15 @@
             :pushedAt="repo.pushedAt"
             :ownerName="repo.owner.login"
             :ownerAvatar="repo.owner.avatarUrl"
+            :stargazer-count='repo.stargazerCount'
           />
         </template>
       </div>
       <Paginator
         :sumRepo="searchRepo.repositoryCount"
         :searchParams="searchParams"
-        @set-page-number="getPageNumberSearch"
+        :currentPage='pageNumberSearch'
+        @set-page-number="handleSetPageNumber"
         @set-search-params="handleSetSearchParams"
         :searchValue="searchValue"
         location="search"
@@ -35,17 +37,20 @@
 import { Ref, ref, watch, computed, onMounted } from 'vue'
 import { useSearchStore } from '@/stores'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { ROUTES } from '@/router/routes'
 import { RepositoriesSearch, SearchState } from '@/stores/types/searchTypes'
 
 import RepoCard from '@/components/UI/RepoCard/RepoCard.vue'
 import Paginator from '@/components/UI/Pagination/Paginator.vue'
 
-const route = useRoute();
+const router = useRouter();
 const searchParams = ref('')
+const searchStore = useSearchStore()
 const {
   getPageNumberSearch,
   getSearchRepositories,
+  getSearchValue,
 } = useSearchStore()
 const store = useSearchStore()
 const {
@@ -57,7 +62,7 @@ const {
 } = storeToRefs(useSearchStore())
 const nodes = computed(() => searchRepo.value?.nodes);
 
-const listRepo:Ref<RepositoriesSearch[]> | undefined = computed(() => {
+const listRepo: RepositoriesSearch[] | undefined = computed(() => {
   if (nodes.value) {
     return [...nodes.value].slice(
       (pageNumberSearch.value - 1) * 10,
@@ -67,28 +72,33 @@ const listRepo:Ref<RepositoriesSearch[]> | undefined = computed(() => {
   return undefined
 });
 
-const handleSetSearchParams = (data) => {
-  console.log('searchParam', data);
-  searchParams.value = (`search=${searchValue.value}&pageNumber=${pageNumberSearch.value}`);
+const handleSetPageNumber = (num: number) => {
+  getPageNumberSearch(num)
+  searchStore.$persist()
+  router.push({ path: ROUTES.SEARCH, query: {
+      search: searchValue.value,
+      pageNumber: pageNumberSearch.value
+    } })
+}
+const handleSetSearchParams = (data: string) => {
+  searchParams.value = data;
   store.$patch((state: SearchState) => {
-      state.searchValue = searchParams.value
+      state.searchValue = searchValue.value
   })
-  console.log('store state', store.$state)
 }
 
 watch(() => numCalls.value, () => {
   searchParams.value = (`search=${searchValue.value}&pageNumber=${pageNumberSearch.value}`);
+  router.push({ path: ROUTES.SEARCH, query: {
+      search: searchValue.value,
+      pageNumber: pageNumberSearch.value
+    } })
 })
 
-// watch(() => restart.value, () => {
-//
-// })
 onMounted(() => {
   if (restart.value) {
-    const pageNumber = Number(route.params?.pageNumber) || 1;
-    const search = route.params?.search || '';
-    getPageNumberSearch(pageNumber);
-    getSearchRepositories(search, 100, false);
+    getPageNumberSearch(pageNumberSearch.value);
+    getSearchRepositories(getSearchValue, 100, false);
   }
 })
 </script>

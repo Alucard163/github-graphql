@@ -8,7 +8,7 @@
       <NumberPaginator
         :active="elem === currentPage"
         :elem="elem"
-        @click="handlePage"
+        @click="handlePage(elem)"
       />
     </template>
 
@@ -20,22 +20,20 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, ref, defineEmits } from 'vue'
+import { ref } from 'vue'
+
 import NumberPaginator from '@/components/UI/Pagination/NumberPaginator.vue'
-import { useRoute } from 'vue-router'
 
 const props = defineProps<{
   sumRepo: number;
   searchValue?: string;
-  searchParams: URLSearchParams;
+  searchParams: string;
+  currentPage: number;
   location: string;
-  getList?: (quantityRepo: number) => Promise<void>;
 }>()
 
 const emit = defineEmits(['setSearchParams', 'setPageNumber'])
 
-const route = useRoute();
-const currentPage = ref(Number(route.params?.pageNumber) || 1);
 const sumPage = ref(Math.min(Math.max(Math.ceil(props.sumRepo / 10), 1), 10))
 
 const pagination = ref<number[]>([]);
@@ -44,20 +42,20 @@ for (let i = 1; i <= sumPage.value; i++) {
 }
 
 const handlePage = (direction: string | number) => {
-  if (direction === "left" && currentPage.value > 1) {
+  if (direction === "left" && props.currentPage > 1) {
     if (props.location === "search") {
-      emit('setSearchParams',`search=${props.searchValue}&pageNumber=${currentPage.value - 1}`);
+      emit('setSearchParams',`search=${props.searchValue}&pageNumber=${props.currentPage - 1}`);
     } else if (props.location === "myRepo") {
-      emit('setSearchParams',`pageNumber=${currentPage.value - 1}`);
+      emit('setSearchParams',`pageNumber=${props.currentPage - 1}`);
     }
-    emit('setPageNumber', currentPage.value - 1);
-  } else if (direction === "right" && currentPage.value < sumPage.value) {
+    emit('setPageNumber', props.currentPage - 1);
+  } else if (direction === "right" && props.currentPage < sumPage.value) {
     if (props.location === "search") {
-      emit('setSearchParams',`search=${props.searchValue}&pageNumber=${currentPage.value + 1}`);
+      emit('setSearchParams',`search=${props.searchValue}&pageNumber=${props.currentPage + 1}`);
     } else if (props.location === "myRepo") {
-      emit('setSearchParams',`pageNumber=${currentPage.value + 1}`);
+      emit('setSearchParams',`pageNumber=${props.currentPage + 1}`);
     }
-    emit('setPageNumber', currentPage.value + 1);
+    emit('setPageNumber', props.currentPage + 1);
   } else if (typeof direction === "number") {
     if (props.location === "search") {
       emit('setSearchParams',`search=${props.searchValue}&pageNumber=${direction}`);

@@ -8,6 +8,7 @@
     </div>
     <h3>{{ title }}</h3>
     <p>Last commit date: {{ calcDateCreation(props.pushedAt) }}</p>
+    <p>★: {{ props.stargazerCount }}</p>
     <div :class="$style.info">
       <div :class="$style.author">
         <div>
@@ -40,6 +41,7 @@ const props = defineProps<{
   pushedAt: string;
   ownerName: string;
   ownerAvatar: string;
+  stargazerCount: number;
 }>()
 </script>
 

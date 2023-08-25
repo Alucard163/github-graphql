@@ -1,16 +1,15 @@
 <template>
-  <div :class=$style.navLink>
+  <div class='navLink'>
     <a
       v-if="isExternalLink"
-      :class="$style.link"
+      class="link"
       :href="$props.to"
     >
       {{ text }}
     </a>
     <RouterLink
       v-else
-      :class="$style.link"
-      :active-class="$style.active"
+      class="link"
       v-bind="$props"
     >
       {{ text }}
@@ -43,7 +42,7 @@ export default {
 }
 </script>
 
-<style module>
+<style lang='scss'>
 .navLink {
   &:hover {
     transform: scale(1.1);
@@ -58,9 +57,5 @@ export default {
   font-size: 19px;
   font-weight: 500;
   color: #fff;
-
-  &.active {
-    color: #f3aa4e;
-  }
 }
 </style>

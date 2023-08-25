@@ -17,15 +17,16 @@
             :pushedAt="repo.pushedAt"
             :ownerName="repo.owner.login"
             :ownerAvatar="repo.owner.avatarUrl"
+            :stargazer-count='repo.stargazerCount'
           />
         </template>
       </div>
       <Paginator
         :sumRepo="repositories.totalCount"
         :searchParams="searchParams"
-        @set-page-number="getPageNumberSearch"
+        :current-page='pageNumberRepositories'
+        @set-page-number="handleSetPageNumber"
         @set-search-params="handleSetSearchParams"
-        :getList="getRepositoriesList"
         location="myRepo"
       />
     </template>
@@ -35,13 +36,14 @@
 <script setup lang='ts'>
 import RepoCard from '@/components/UI/RepoCard/RepoCard.vue'
 import Paginator from '@/components/UI/Pagination/Paginator.vue'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
-import { useRepositoriesStore, useSearchStore } from '@/stores'
+import { useRepositoriesStore } from '@/stores'
 import { storeToRefs } from 'pinia'
-import { RepositoriesNodes } from '@/stores/types/repositoriesTypes'
+import { RepositoriesNodes, RepositoriesState } from '@/stores/types/repositoriesTypes'
+import { ROUTES } from '@/router/routes'
 
-const route = useRoute();
+const router = useRouter();
 const searchParams = ref('')
 const {
   getRepositoriesList,
@@ -49,13 +51,15 @@ const {
   getPageNumber
 } = useRepositoriesStore()
 const store = useRepositoriesStore()
+
 const {
   repositories,
   pageNumberRepositories,
+  searchValue,
+  searchRepo,
 } = storeToRefs(useRepositoriesStore())
+
 const nodes = computed(() => repositories.value?.nodes);
-const pageNumber = Number(route.params?.pageNumber) || 1;
-getPageNumber(pageNumber);
 
 const listRepo:RepositoriesNodes[] | undefined = computed(() => {
   let listRepoData
@@ -69,6 +73,21 @@ const listRepo:RepositoriesNodes[] | undefined = computed(() => {
   }
   return listRepoData;
 })
+
+const handleSetPageNumber = (num: number) => {
+  getPageNumber(num);
+  store.$persist();
+  router.push({ path: ROUTES.REPOSITORIES, query: {
+      pageNumber: pageNumberRepositories.value
+    } })
+}
+
+const handleSetSearchParams = (data: string) => {
+  searchParams.value = data;
+  store.$patch((state: RepositoriesState) => {
+      state.searchValue = searchParams.value
+  })
+}
 
 </script>
 

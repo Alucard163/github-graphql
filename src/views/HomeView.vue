@@ -50,18 +50,21 @@ import { ref, onMounted } from 'vue'
 
 import avatar from '@/assets/img/avatar.png'
 import { ROUTES } from '@/router/routes'
-import { useUserStore } from '@/stores'
+import { useRepositoriesStore, useUserStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 
 import CustomLink from '@/components/UI/CustomLink/CustomLink.vue'
 
-const pageNumberRepositories = ref<number>(1)
+const { pageNumberRepositories } = storeToRefs(useRepositoriesStore())
 const { getUser } = storeToRefs(useUserStore())
 const userData = ref(getUser)
 
 onMounted(() => {
   const { getUserData } = useUserStore()
+  const { getRepositoriesList } = useRepositoriesStore()
+
   getUserData();
+  getRepositoriesList(100);
 })
 </script>
 

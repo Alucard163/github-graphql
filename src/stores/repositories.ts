@@ -29,19 +29,6 @@ export const useRepositoriesStore = defineStore({
     }
   },
   actions: {
-    // setRepositoriesList(state, action: PayloadAction<Repositories>) {
-    //   state.repositories = action.payload;
-    // },
-    // setSearchRepositoriesList(state, action: PayloadAction<SearchRepo>) {
-    //   state.searchRepo = action.payload;
-    // },
-    // setSearchValue(state, action: PayloadAction<string>) {
-    //   state.searchValue = action.payload;
-    // },
-    //
-    // setPageNumber(state, action: PayloadAction<number>) {
-    //   state.pageNumberRepositories = action.payload;
-    // },
     async getRepositoriesList (quantityRepo: number) {
       const response = await apolloClient.query({
         query: GET_REPOSITORIES,

@@ -18,6 +18,7 @@ export const SEARCH_REPOSITORIES = gql`
                         url
                         avatarUrl
                     }
+                    stargazerCount
                 }
             }
         }
@@ -42,6 +43,7 @@ export const QUICK_SEARCH = gql`
                         url
                         avatarUrl
                     }
+                    stargazerCount
                 }
             }
         }
@@ -64,6 +66,7 @@ export const CURRENT_REPOSITORY = gql`
                     url
                     avatarUrl
                 }
+                stargazerCount
             }
         }
     }

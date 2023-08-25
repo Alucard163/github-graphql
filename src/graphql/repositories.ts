@@ -19,6 +19,7 @@ export const GET_REPOSITORIES = gql`
                         url
                         avatarUrl
                     }
+                    stargazerCount
                 }
             }
         }

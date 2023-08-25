@@ -12,6 +12,7 @@
         <div :class="$style.text">
           <h3>Name: {{ repo.name }} </h3>
           <h4>Owner: {{ repo.owner.login }} </h4>
+          <h5>★: {{ repo.stargazerCount }}</h5>
           <p>
             Date of creation: {{ calcDateCreation(repo.createdAt) }}
             <br />

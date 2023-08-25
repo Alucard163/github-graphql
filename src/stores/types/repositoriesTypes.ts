@@ -5,6 +5,7 @@ export interface RepositoriesNodes {
   url: string;
   createdAt: string;
   pushedAt: string;
+  stargazerCount: number;
   owner: {
     id: string;
     login: string;

@@ -1,13 +1,13 @@
 <template>
-  <header :class=$style.header>
-    <div :class=$style.logo>
+  <header class='header'>
+    <div class='logo'>
       <RouterLink :to=ROUTES.HOME>
         <img :src="logo" alt="logo" />
         <span>GitHubApp</span>
       </RouterLink>
     </div>
     <CustomInput />
-    <nav :class=$style.nav>
+    <nav class='nav'>
       <CustomLink :to=ROUTES.HOME text="Home" />
       <CustomLink
         :to="`${ROUTES.REPOSITORIES}?pageNumber=${pageNumberRepositories}`"
@@ -19,19 +19,21 @@
 </template>
 
 <script setup lang='ts'>
-import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ROUTES } from '@/router/routes'
+import { storeToRefs } from 'pinia'
+import { useRepositoriesStore } from '@/stores'
 
 import logo from '@/assets/img/logo.png'
 
 import CustomLink from '@/components/UI/CustomLink/CustomLink.vue'
 import CustomInput from '@/components/UI/CustomInput/CustomInput.vue'
 
-const pageNumberRepositories = ref(1)
+
+const { pageNumberRepositories } = storeToRefs(useRepositoriesStore())
 </script>
 
-<style lang='scss' module>
+<style lang='scss'>
 .header {
   padding: 20px;
   height: 80px;
@@ -68,14 +70,6 @@ const pageNumberRepositories = ref(1)
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-
-  a.router-link-exact-active {
-    color: var(--color-text);
-  }
-
-  a.router-link-exact-active:hover {
-    background-color: transparent;
-  }
 
   a {
     display: inline-block;
