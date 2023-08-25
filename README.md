@@ -1,5 +1,12 @@
 # GitHubApp
 
+## Run
+
+First you need to get token from [github account](https://github.com/settings/tokens) with read access to repositories,
+then you should paste its value to `.env` file in `VITE_APP_GITHUB_ACCESS_TOKEN` variable. After this you should move to
+the root folder of project in console (for example `cd github-graphql`) and then install dependencies(`npm install`).
+To run project in dev mode run this in console `npm run dev`
+
 ## Available Scripts
 
 In the project directory, you can run:
