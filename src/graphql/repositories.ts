@@ -20,6 +20,11 @@ export const GET_REPOSITORIES = gql`
                         avatarUrl
                     }
                     stargazerCount
+                    primaryLanguage {
+                        color
+                        name
+                    }
+                    description
                 }
             }
         }

@@ -9,6 +9,9 @@
     <h3>{{ title }}</h3>
     <p>Last commit date: {{ calcDateCreation(props.pushedAt) }}</p>
     <p>★: {{ props.stargazerCount }}</p>
+    <p :class="$style.description">
+      <i>{{ props.description }}</i>
+    </p>
     <div :class="$style.info">
       <div :class="$style.author">
         <div>
@@ -35,6 +38,11 @@ import { calcDateCreation } from '@/helpers/helpers'
 const props = defineProps<{
   id: string;
   number: number;
+  description: string;
+  primaryLanguage: {
+    color: string,
+    name: string,
+  }
   title: string;
   url: string;
   createdAt: string;
@@ -75,6 +83,15 @@ const props = defineProps<{
       color: #f3aa4e;
     }
   }
+}
+
+.description {
+  max-width: 50%;
+  margin-left: auto;
+  max-height: 12%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .number {

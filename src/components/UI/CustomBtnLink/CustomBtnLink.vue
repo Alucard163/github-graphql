@@ -18,7 +18,7 @@ import { defineProps, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const props = defineProps<{
-  class: string;
+  class?: string;
   url: string;
   text: string;
 }>()

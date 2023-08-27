@@ -1,6 +1,7 @@
 export interface RepositoriesSearch {
   id: string;
   name: string;
+  description: string;
   openGraphImageUrl: string;
   url: string;
   createdAt: string;
@@ -12,6 +13,10 @@ export interface RepositoriesSearch {
     url: string;
     avatarUrl: string;
   };
+  primaryLanguage: {
+    color: string;
+    name: string;
+  }
 }
 
 export interface SearchRepo {

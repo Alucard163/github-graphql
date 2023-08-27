@@ -1,11 +1,16 @@
 export interface RepositoriesNodes {
   id: string;
   name: string;
+  description: string;
   openGraphImageUrl: string;
   url: string;
   createdAt: string;
   pushedAt: string;
   stargazerCount: number;
+  primaryLanguage: {
+    color: string;
+    name: string;
+  };
   owner: {
     id: string;
     login: string;

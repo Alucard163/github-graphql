@@ -11,13 +11,22 @@
       <div :class="$style.info">
         <div :class="$style.text">
           <h3>Name: {{ repo.name }} </h3>
-          <h4>Owner: {{ repo.owner.login }} </h4>
+          <h4>Owner: <CustomBtnLink
+            :class="$style.owner"
+            :text="repo.owner.login"
+            :url="repo.owner.url"
+          />
+          </h4>
+          <p v-if='repo.description'>Description: <i>{{ repo.description }}</i></p>
           <h5>★: {{ repo.stargazerCount }}</h5>
           <p>
             Date of creation: {{ calcDateCreation(repo.createdAt) }}
             <br />
             Last commit date: {{ calcDateCreation(repo.pushedAt) }}
           </p>
+          <p v-if="repo.primaryLanguage && Object.keys(repo.primaryLanguage).length > 1">
+              Language: {{ repo.primaryLanguage.name }}
+            </p>
           <p />
         </div>
         <div :class="$style.linkGitHub">
@@ -135,5 +144,10 @@ h2 {
   a {
     font-size: 20px;
   }
+}
+
+.owner {
+  display: inline-block;
+  margin: 1rem 0;
 }
 </style>

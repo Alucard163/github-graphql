@@ -17,6 +17,8 @@
             :ownerName="repo.owner.login"
             :ownerAvatar="repo.owner.avatarUrl"
             :stargazer-count='repo.stargazerCount'
+            :description='repo.description'
+            :primary-language='repo.primaryLanguage'
           />
         </template>
       </div>

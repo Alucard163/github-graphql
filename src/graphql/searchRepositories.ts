@@ -19,6 +19,11 @@ export const SEARCH_REPOSITORIES = gql`
                         avatarUrl
                     }
                     stargazerCount
+                    primaryLanguage {
+                        color
+                        name
+                    }
+                    description
                 }
             }
         }
@@ -44,6 +49,11 @@ export const QUICK_SEARCH = gql`
                         avatarUrl
                     }
                     stargazerCount
+                    primaryLanguage {
+                        color
+                        name
+                    }
+                    description
                 }
             }
         }
@@ -67,6 +77,11 @@ export const CURRENT_REPOSITORY = gql`
                     avatarUrl
                 }
                 stargazerCount
+                primaryLanguage {
+                    color
+                    name
+                }
+                description
             }
         }
     }
