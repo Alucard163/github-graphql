@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  base: 'https://alucard163.github.io/github-graphql/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
