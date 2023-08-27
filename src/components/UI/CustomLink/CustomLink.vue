@@ -3,43 +3,38 @@
     <a
       v-if="isExternalLink"
       class="link"
-      :href="$props.to"
+      :href="props.to.path"
     >
-      {{ text }}
+      {{ props.text }}
     </a>
     <RouterLink
       v-else
       class="link"
-      v-bind="$props"
+      :to='props.to'
     >
-      {{ text }}
+      {{ props.text }}
     </RouterLink>
   </div>
 </template>
 
-<script lang='ts'>
+<script setup lang='ts'>
 import { RouterLink } from 'vue-router'
-import { computed } from 'vue'
-
-export default {
-  name: 'CustomLink',
-
-  props: {
-    // @ts-ignore
-    ...RouterLink.props,
-    to: String,
-    text: String,
-  },
-
-  setup(props) {
-
-    const isExternalLink = computed(
-      () => typeof props.to === 'string' && props.to.startsWith('http')
-    )
-
-    return { isExternalLink }
-  },
+import { computed, Ref } from 'vue'
+type routeType = {
+  path: string;
+  query?: undefined;
+} | {
+  path: string;
+  query?: Record<string, unknown>;
 }
+const props = defineProps<{
+  to: routeType,
+  text: String,
+}>()
+
+const isExternalLink = computed(
+  () => props.to?.path?.startsWith('http')
+)
 </script>
 
 <style lang='scss'>

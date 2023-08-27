@@ -35,7 +35,7 @@
 <script setup lang='ts'>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { ROUTES } from '@/router/routes'
+import { ROUTE_URL } from '@/router/routes'
 import search from '@/assets/img/icon-search.png'
 import RepoCardSmall from '@/components/UI/RepoCardSmall/RepoCardSmall.vue'
 import { useSearchStore } from '@/stores'
@@ -54,7 +54,7 @@ const getSearchRepo = () => {
   getPageNumberSearch(1)
   getSearchRepositories(searchValue.value, 100, false);
   searchValue.value = '';
-  router.push({ path: ROUTES.SEARCH, query: {
+  router.push({ path: ROUTE_URL.SEARCH, query: {
     search: getSearchValue,
     pageNumber: pageNumberSearch.value
   } })

@@ -1,26 +1,24 @@
 <template>
   <header class='header'>
     <div class='logo'>
-      <RouterLink :to=ROUTES.HOME>
+      <RouterLink :to=ROUTE_URL.HOME>
         <img :src="logo" alt="logo" />
         <span>GitHubApp</span>
       </RouterLink>
     </div>
     <CustomInput />
     <nav class='nav'>
-      <CustomLink :to=ROUTES.HOME text="Home" />
-      <CustomLink
-        :to="`${ROUTES.REPOSITORIES}?pageNumber=${pageNumberRepositories}`"
-        text="My repositories"
-      />
-      <CustomLink to="https://github.com/" text="GitHub Main Page" />
+      <template v-for='route in routes' :key='route.path'>
+        <CustomLink :to='route.routeParams' :text='route.text' />
+      </template>
+      <CustomLink :to="{ path: 'https://github.com/' }" text="GitHub Main Page" />
     </nav>
   </header>
 </template>
 
 <script setup lang='ts'>
 import { RouterLink } from 'vue-router'
-import { ROUTES } from '@/router/routes'
+import { ROUTE_URL } from '@/router/routes'
 import { storeToRefs } from 'pinia'
 import { useRepositoriesStore } from '@/stores'
 
@@ -31,6 +29,15 @@ import CustomInput from '@/components/UI/CustomInput/CustomInput.vue'
 
 
 const { pageNumberRepositories } = storeToRefs(useRepositoriesStore())
+
+const routes = [
+  { routeParams: { path: ROUTE_URL.HOME }, text: 'Home' },
+  { routeParams: {
+    path: ROUTE_URL.REPOSITORIES,
+    query: { pageNumber: pageNumberRepositories.value }},
+    text: 'My repositories'
+  }
+]
 </script>
 
 <style lang='scss'>

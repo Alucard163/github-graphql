@@ -18,7 +18,7 @@
     </div>
     <div :class=$style.logo>
       <span>© GitHubApp - 2023</span>
-      <RouterLink :to="ROUTES.HOME">
+      <RouterLink :to="ROUTE_URL.HOME">
         <img :src=logo alt="logo2" />
       </RouterLink>
     </div>
@@ -27,7 +27,7 @@
 
 <script setup lang='ts'>
 import { RouterLink } from 'vue-router'
-import { ROUTES } from '@/router/routes'
+import { ROUTE_URL } from '@/router/routes'
 
 import logo from '@/assets/img/logo2.png'
 

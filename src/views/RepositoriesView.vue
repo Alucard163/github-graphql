@@ -41,7 +41,7 @@ import { computed, ref } from 'vue'
 import { useRepositoriesStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { RepositoriesNodes, RepositoriesState } from '@/stores/types/repositoriesTypes'
-import { ROUTES } from '@/router/routes'
+import { ROUTE_URL } from '@/router/routes'
 
 const router = useRouter();
 const searchParams = ref('')
@@ -77,7 +77,7 @@ const listRepo:RepositoriesNodes[] | undefined = computed(() => {
 const handleSetPageNumber = (num: number) => {
   getPageNumber(num);
   store.$persist();
-  router.push({ path: ROUTES.REPOSITORIES, query: {
+  router.push({ path: ROUTE_URL.REPOSITORIES, query: {
       pageNumber: pageNumberRepositories.value
     } })
 }
@@ -100,7 +100,6 @@ const handleSetSearchParams = (data: string) => {
     text-align: center;
     font-size: 40px;
     color: transparent;
-    animation: animHeader 2s forwards;
   }
 }
 
@@ -112,7 +111,6 @@ const handleSetSearchParams = (data: string) => {
   color: #f3aa4e;
   text-shadow: 1px 1px #000, -1px -1px #000, -1px 1px #000, 1px -1px #000,
   -2px -2px 5px #943d9d, 2px 2px 5px #943d9d;
-  animation: animRepoInfo 2s forwards;
 }
 
 .content {

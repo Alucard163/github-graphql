@@ -45,21 +45,22 @@ import { useQuery } from '@vue/apollo-composable'
 import { useRepositoriesStore, useSearchStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { RepositoriesNodes } from '@/stores/types/repositoriesTypes'
 
 const route = useRoute();
 // get id from url params
-const id = route.params?.id || '';
+const id = ref(route.params?.id || '');
 const { searchRepo } = storeToRefs(useSearchStore())
 const { repositories } = storeToRefs(useRepositoriesStore())
 const { loading, result, error } = useQuery(CURRENT_REPOSITORY, {
   variables: { id },
 });
 
-const repo = computed(() => {
-  let repo = repositories.value?.nodes.find((repo) => id === repo.id);
+const repo = computed<RepositoriesNodes>(() => {
+  let repo = repositories.value?.nodes.find((repo) => id.value === repo.id);
   if (!repo) {
-    repo = searchRepo.value?.nodes.find((repo) => id === repo.id);
+    repo = searchRepo.value?.nodes.find((repo) => id.value === repo.id);
   }
   if (!repo && !loading && !error) {
     repo = result.value.node;

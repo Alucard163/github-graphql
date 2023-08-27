@@ -39,7 +39,10 @@
     </div>
     <CustomLink
       :class="$style.link"
-      :to="`${ROUTES.REPOSITORIES}?pageNumber=${pageNumberRepositories}`"
+      :to="{
+        path: ROUTE_URL.REPOSITORIES,
+        query: { pageNumber: pageNumberRepositories }
+      }"
       text="Repositories page"
     />
   </section>
@@ -49,7 +52,7 @@
 import { ref, onMounted } from 'vue'
 
 import avatar from '@/assets/img/avatar.png'
-import { ROUTES } from '@/router/routes'
+import { ROUTE_URL } from '@/router/routes'
 import { useRepositoriesStore, useUserStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 

@@ -34,11 +34,11 @@
 </template>
 
 <script setup lang='ts'>
-import { Ref, ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { useSearchStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import { ROUTES } from '@/router/routes'
+import { ROUTE_URL } from '@/router/routes'
 import { RepositoriesSearch, SearchState } from '@/stores/types/searchTypes'
 
 import RepoCard from '@/components/UI/RepoCard/RepoCard.vue'
@@ -75,7 +75,7 @@ const listRepo: RepositoriesSearch[] | undefined = computed(() => {
 const handleSetPageNumber = (num: number) => {
   getPageNumberSearch(num)
   searchStore.$persist()
-  router.push({ path: ROUTES.SEARCH, query: {
+  router.push({ path: ROUTE_URL.SEARCH, query: {
       search: searchValue.value,
       pageNumber: pageNumberSearch.value
     } })
@@ -89,7 +89,7 @@ const handleSetSearchParams = (data: string) => {
 
 watch(() => numCalls.value, () => {
   searchParams.value = (`search=${searchValue.value}&pageNumber=${pageNumberSearch.value}`);
-  router.push({ path: ROUTES.SEARCH, query: {
+  router.push({ path: ROUTE_URL.SEARCH, query: {
       search: searchValue.value,
       pageNumber: pageNumberSearch.value
     } })
