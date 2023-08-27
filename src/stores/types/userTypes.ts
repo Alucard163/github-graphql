@@ -8,5 +8,5 @@ export interface User {
 export interface UserState {
   user: User | null;
   loading: boolean;
-  error: Error | null;
+  error: Error | unknown;
 }

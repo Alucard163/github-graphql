@@ -19,7 +19,7 @@
 
 <script setup lang='ts'>
 import { RouterLink } from 'vue-router'
-import { computed, Ref } from 'vue'
+import { computed } from 'vue'
 type routeType = {
   path: string;
   query?: undefined;

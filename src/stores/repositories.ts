@@ -1,4 +1,4 @@
-import { RepositoriesState } from '@/stores/types/repositoriesTypes'
+import type { RepositoriesState } from '@/stores/types/repositoriesTypes'
 import { defineStore } from 'pinia'
 import { apolloClient } from '@/graphql/apolloClient'
 import { GET_REPOSITORIES } from '@/graphql/repositories'

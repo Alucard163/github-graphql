@@ -19,7 +19,7 @@
     <div :class=$style.logo>
       <span>© GitHubApp - 2023</span>
       <RouterLink :to="ROUTE_URL.HOME">
-        <img :src=logo alt="logo2" />
+        <img :src="logo" alt="logo2" />
       </RouterLink>
     </div>
   </footer>

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { GET_USER } from '@/graphql/user'
 import { apolloClient } from '@/graphql/apolloClient'
-import { UserState } from '@/stores/types/userTypes'
+import type { UserState } from '@/stores/types/userTypes'
 
 const initialState: UserState = {
   user: null,
@@ -31,7 +31,8 @@ export const useUserStore = defineStore({
           query: GET_USER,
         });
         this.user = response.data?.viewer;
-      } catch (error) {
+      } catch (error: Error | unknown) {
+        // @ts-ignore
         this.error = error
       } finally {
         this.loading = false

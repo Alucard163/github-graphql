@@ -1,4 +1,4 @@
-import { SearchState } from '@/stores/types/searchTypes'
+import type { SearchState } from '@/stores/types/searchTypes'
 import { defineStore } from 'pinia'
 import { apolloClient } from '@/graphql/apolloClient'
 import {

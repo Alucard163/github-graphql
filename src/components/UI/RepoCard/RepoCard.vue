@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps } from 'vue'
 import { RouterLink } from 'vue-router'
 import git from '@/assets/img/git.png'
 import { calcDateCreation } from '@/helpers/helpers'
