@@ -17,9 +17,13 @@
       </a>
     </div>
     <div :class=$style.logo>
-      <span>© GitHubApp - 2023</span>
+      <span :class='$style.github'>© GitHubApp - 2023</span>
       <RouterLink :to="ROUTE_URL.HOME">
-        <img :src="logo" alt="logo2" />
+        <img
+          :src="logo"
+          alt="logo2"
+          :class='$style.img'
+        />
       </RouterLink>
     </div>
   </footer>
@@ -52,14 +56,12 @@ import logo from '@/assets/img/logo2.png'
   }
 }
 
-.logo {
-  span {
-    margin-right: 10px;
-    vertical-align: 50%;
-  }
+.github {
+  margin-right: 10px;
+  vertical-align: 50%;
+}
 
-  img {
-    width: 35px;
-  }
+.img {
+  width: 35px;
 }
 </style>
